@@ -142,7 +142,7 @@ public class BaseSqlProvider {
 						field.setAccessible(true);
 						Object value = field.get(model);
 						if(value != null) {
-							Class<?> clazz2 = field.getClass();
+							Class<?> clazz2 = value.getClass();
 							if(!clazz2.equals(List.class) && !clazz2.equals(ArrayList.class)
 									&& !clazz2.equals(LinkedList.class)) {// 多对一,不支持多对多
 								Field field2 = clazz2.getDeclaredField(values[1]);
