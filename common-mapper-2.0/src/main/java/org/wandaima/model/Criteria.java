@@ -83,7 +83,7 @@ public class Criteria {
 
 	public Criteria orderBy(String name, String value) {
 		if (name != null && value != null) {
-			setCondition(name, "ORDER BY", value);
+			setOrderby(name, "ORDER BY", value);
 			setFk(name);
 		}
 		return this;
@@ -111,6 +111,14 @@ public class Criteria {
 		condition.setOperator(operator);
 		condition.setValue(value);
 		conditionList.add(condition);
+	}
+	
+	private void setOrderby(String fieldName, String operator, Object value) {
+		ConditionDefinition condition = new ConditionDefinition();
+		condition.setFieldName(fieldName);
+		condition.setOperator(operator);
+		condition.setValue(value);
+		orderbyList.add(condition);
 	}
 	
 	private void setFk(String fieldName) {
