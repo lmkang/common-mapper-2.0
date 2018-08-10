@@ -80,6 +80,14 @@ public class Criteria {
 		}
 		return this;
 	}
+	
+	public Criteria in(String name, Object[] values) {
+		if (name != null) {
+			setCondition(name, "IN", values);
+			setFk(name);
+		}
+		return this;
+	}
 
 	public Criteria orderBy(String name, String value) {
 		if (name != null && value != null) {
@@ -127,4 +135,5 @@ public class Criteria {
 			fkSet.add(names[0]);
 		}
 	}
+	
 }
