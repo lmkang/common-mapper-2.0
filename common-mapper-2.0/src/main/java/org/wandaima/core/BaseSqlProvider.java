@@ -189,7 +189,21 @@ public class BaseSqlProvider {
 							column = table.name() + "." + column;
 						}
 						if(value != null) {
-							sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+							if("IN".equals(operator)) {
+								if(value.getClass().isArray()) {
+									Object[] objArr = (Object[]) value;
+									StringBuilder builder = new StringBuilder();
+									builder.append(String.format("%s %s (", column, operator));
+									for(int j = 0; j < objArr.length; j++) {
+										builder.append(String.format("#{criteria.conditionList[%d].value[%d]},", i, j));
+									}
+									builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+									builder.append(")");
+									sql.WHERE(builder.toString());
+								}
+							} else {
+								sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+							}
 						} else {// IS NULL 或者 IS NOT NULL
 							column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 							sql.WHERE(String.format("%s.%s %s", table.name(), column, operator));
@@ -203,7 +217,23 @@ public class BaseSqlProvider {
 							}
 							column = tableName + "." + column;
 							if(value != null) {
-								sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+								if("IN".equals(operator)) {
+									if(value.getClass().isArray()) {
+										if(value.getClass().isArray()) {
+											Object[] objArr = (Object[]) value;
+											StringBuilder builder = new StringBuilder();
+											builder.append(String.format("%s %s (", column, operator));
+											for(int j = 0; j < objArr.length; j++) {
+												builder.append(String.format("#{criteria.conditionList[%d].value[%d]},", i, j));
+											}
+											builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+											builder.append(")");
+											sql.WHERE(builder.toString());
+										}
+									}
+								} else {
+									sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+								}
 							} else {// IS NULL 或者 IS NOT NULL
 								column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 								sql.WHERE(String.format("%s.%s %s", table.name(), column, operator));
@@ -260,7 +290,21 @@ public class BaseSqlProvider {
 						column = table.name() + "." + column;
 					}
 					if(value != null) {
-						sql.append(String.format("%s %s #{conditionList[%d].value} AND ", column, operator, i));
+						if("IN".equals(operator)) {
+							if(value.getClass().isArray()) {
+								Object[] objArr = (Object[]) value;
+								StringBuilder builder = new StringBuilder();
+								builder.append(String.format("%s %s (", column, operator));
+								for(int j = 0; j < objArr.length; j++) {
+									builder.append(String.format("#{criteria.conditionList[%d].value[%d]},", i, j));
+								}
+								builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+								builder.append(") AND ");
+								sql.append(builder.toString());
+							}
+						} else {
+							sql.append(String.format("%s %s #{conditionList[%d].value} AND ", column, operator, i));
+						}
 					} else {// IS NULL 或者 IS NOT NULL
 						column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 						sql.append(String.format("%s.%s %s AND ", table.name(), column, operator));
@@ -274,7 +318,21 @@ public class BaseSqlProvider {
 						}
 						column = tableName + "." + column;
 						if(value != null) {
-							sql.append(String.format("%s %s #{conditionList[%d].value} AND ", tableName, column, i));
+							if("IN".equals(operator)) {
+								if(value.getClass().isArray()) {
+									Object[] objArr = (Object[]) value;
+									StringBuilder builder = new StringBuilder();
+									builder.append(String.format("%s %s (", column, operator));
+									for(int j = 0; j < objArr.length; j++) {
+										builder.append(String.format("#{criteria.conditionList[%d].value[%d]},", i, j));
+									}
+									builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+									builder.append(") AND ");
+									sql.append(builder.toString());
+								}
+							} else {
+								sql.append(String.format("%s %s #{conditionList[%d].value} AND ", tableName, column, i));
+							}
 						} else {// IS NULL 或者 IS NOT NULL
 							column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 							sql.append(String.format("%s.%s %s AND ", table.name(), column, operator));
@@ -393,7 +451,21 @@ public class BaseSqlProvider {
 						column = String.format("%s.%s", table.name(), column);
 					}
 					if(value != null) {
-						sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+						if("IN".equals(operator)) {
+							if(value.getClass().isArray()) {
+								Object[] objArr = (Object[]) value;
+								StringBuilder builder = new StringBuilder();
+								builder.append(String.format("%s %s (", column, operator));
+								for(int j = 0; j < objArr.length; j++) {
+									builder.append(String.format("#{criteria.conditionList[%d].value[%d]},", i, j));
+								}
+								builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+								builder.append(")");
+								sql.WHERE(builder.toString());
+							}
+						} else {
+							sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+						}
 					} else {// IS NULL 或者 IS NOT NULL
 						column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 						sql.WHERE(String.format("%s.%s %s", table.name(), column, operator));
@@ -407,7 +479,21 @@ public class BaseSqlProvider {
 						}
 						column = tableName + "." + column;
 						if(value != null) {
-							sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+							if("IN".equals(operator)) {
+								if(value.getClass().isArray()) {
+									Object[] objArr = (Object[]) value;
+									StringBuilder builder = new StringBuilder();
+									builder.append(String.format("%s %s (", column, operator));
+									for(int j = 0; j < objArr.length; j++) {
+										builder.append(String.format("#{criteria.conditionList[%d].value[%d]},", i, j));
+									}
+									builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+									builder.append(")");
+									sql.WHERE(builder.toString());
+								}
+							} else {
+								sql.WHERE(String.format("%s %s #{criteria.conditionList[%d].value}", column, operator, i));
+							}
 						} else {// IS NULL 或者 IS NOT NULL
 							column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 							sql.WHERE(String.format("%s.%s %s", table.name(), column, operator));
@@ -541,7 +627,21 @@ public class BaseSqlProvider {
 						column = String.format("%s.%s", table.name(), column);
 					}
 					if(value != null) {
-						sql.WHERE(String.format("%s %s #{conditionList[%d].value}", column, operator, i));
+						if("IN".equals(operator)) {
+							if(value.getClass().isArray()) {
+								Object[] objArr = (Object[]) value;
+								StringBuilder builder = new StringBuilder();
+								builder.append(String.format("%s %s (", column, operator));
+								for(int j = 0; j < objArr.length; j++) {
+									builder.append(String.format("#{conditionList[%d].value[%d]},", i, j));
+								}
+								builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+								builder.append(")");
+								sql.WHERE(builder.toString());
+							}
+						} else {
+							sql.WHERE(String.format("%s %s #{conditionList[%d].value}", column, operator, i));
+						}
 					} else {// IS NULL 或者 IS NOT NULL
 						column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 						sql.WHERE(String.format("%s.%s %s", table.name(), column, operator));
@@ -555,7 +655,21 @@ public class BaseSqlProvider {
 						}
 						column = tableName + "." + column;
 						if(value != null) {
-							sql.WHERE(String.format("%s %s #{conditionList[%d].value}", column, operator, i));
+							if("IN".equals(operator)) {
+								if(value.getClass().isArray()) {
+									Object[] objArr = (Object[]) value;
+									StringBuilder builder = new StringBuilder();
+									builder.append(String.format("%s %s (", column, operator));
+									for(int j = 0; j < objArr.length; j++) {
+										builder.append(String.format("#{conditionList[%d].value[%d]},", i, j));
+									}
+									builder.delete(builder.length() - 1, builder.length());// 删除掉最后一个","
+									builder.append(")");
+									sql.WHERE(builder.toString());
+								}
+							} else {
+								sql.WHERE(String.format("%s %s #{conditionList[%d].value}", column, operator, i));
+							}
 						} else {// IS NULL 或者 IS NOT NULL
 							column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
 							sql.WHERE(String.format("%s.%s %s", table.name(), column, operator));
