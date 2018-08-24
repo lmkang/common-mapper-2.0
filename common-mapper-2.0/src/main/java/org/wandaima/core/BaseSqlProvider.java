@@ -331,7 +331,7 @@ public class BaseSqlProvider {
 									sql.append(builder.toString());
 								}
 							} else {
-								sql.append(String.format("%s %s #{conditionList[%d].value} AND ", tableName, column, i));
+								sql.append(String.format("%s %s #{conditionList[%d].value} AND ", column, operator, i));
 							}
 						} else {// IS NULL 或者 IS NOT NULL
 							column = baseResultMapping.get(fieldName + "." + fkIdResult.get(fieldName).getProperty());
