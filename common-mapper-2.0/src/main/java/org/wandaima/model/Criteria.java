@@ -59,7 +59,7 @@ public class Criteria {
 
 	public Criteria like(String name, String value) {
 		if (name != null && value != null) {
-			setCondition(name, "LIKE", value);
+			setCondition(name, "LIKE", "%" + value + "%");
 			setFk(name);
 		}
 		return this;
